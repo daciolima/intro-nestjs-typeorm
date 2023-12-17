@@ -1,6 +1,9 @@
 
-## Description
-- Exemplo de backend em NestJS
+## Projeto Exemplo usando typeORM com conexão no DB Postgres.
+
+- Database Postgres
+- TypeORM;
+- Testes Unitários
 
 ## CLI Nest
 ```bash
