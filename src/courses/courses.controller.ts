@@ -1,8 +1,11 @@
-import { Controller, Get, Post, Put, Delete, Param, Body, HttpCode, Res, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body, HttpCode, Res, HttpStatus, UseGuards } from '@nestjs/common';
 import { CoursesService } from './courses.service';
 import { CreateCourseDTO, UpdateCourseDTO } from './courses.dto';
+import { Roles } from 'nest-keycloak-connect';
+
 
 @Controller('courses')
+@Roles({roles: ['dev']})
 export class CoursesController {
 
     constructor(private readonly coursesService: CoursesService) {}
@@ -12,7 +15,7 @@ export class CoursesController {
 
        const listCourses = await this.coursesService.findAll()
        const count = listCourses.length
-       return res.status(200).json({"counts": count, "data": listCourses})
+       return res.status(200).json({"counts": count, "results": listCourses})
     }
 
     // @Get(':id/:name')

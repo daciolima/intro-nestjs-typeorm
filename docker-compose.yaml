@@ -1,0 +1,32 @@
+version: '3.1'
+
+services: 
+  postgres-nestjs:
+    image: docker.io/postgres:11.21-alpine3.17
+    restart: always
+    ports: 
+      - 5430:5430
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: db_cursos
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    networks:
+      - lan_keycloak_krakend    
+
+  app-backend:
+    build: .
+    ports: 
+      - 3000:3000
+    volumes:
+      - .:/home/node/app
+    networks:
+      - lan_keycloak_krakend 
+    depends_on:
+      - postgres-nestjs      
+    
+
+networks:
+  lan_keycloak_krakend:
+    driver: bridge
